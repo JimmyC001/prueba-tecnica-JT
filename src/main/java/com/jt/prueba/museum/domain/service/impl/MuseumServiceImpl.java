@@ -15,8 +15,31 @@ public class MuseumServiceImpl implements MuseumService {
     MuseumServiceImpl(MuseumRespository repository){
         this.repository = repository;
     }
+
+    @Override
+    public List<Museum> getAllMuseums() {
+        return repository.findAll();
+    }
+
     @Override
     public List<Museum> getFromCityAndStartingChar(String city, String c) {
         return repository.findByCityAndFirstLetter(city, c);
+    }
+
+    @Override
+    public Museum createMuseum(Museum museum) {
+        return repository.save(museum);
+    }
+
+    @Override
+    public Museum updateMuseum(Museum museum, Long id) {
+        Museum dbMuseum = repository.findById(id).orElse(null);
+        if(dbMuseum == null)
+            return null;
+        dbMuseum.setAddress(museum.getAddress());
+        dbMuseum.setName(museum.getName());
+        dbMuseum.setCity(museum.getCity());
+        dbMuseum.setCountry(museum.getCountry());
+        return repository.save(dbMuseum);
     }
 }
