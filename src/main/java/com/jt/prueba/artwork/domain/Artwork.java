@@ -25,10 +25,11 @@ public class Artwork {
     private String name;
     @Column(length = 30)
     private String country;
-    @ManyToOne(cascade = CascadeType.ALL, optional = false, targetEntity = Artist.class)
+    @ManyToOne
     @JoinColumn(name = "id_artist")
+    @JsonIgnore
     private Artist artist;
-    @ManyToMany(mappedBy = "artworks")
+    @ManyToMany(mappedBy = "artworks", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Museum> museums;
 }

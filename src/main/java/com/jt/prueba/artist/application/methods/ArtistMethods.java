@@ -26,4 +26,10 @@ public class ArtistMethods {
             return null;
         return service.getArtworkFromArtist(artist.getId(), country);
     }
+
+    public Artist updateArtist(Artist artist, String type, String id){
+        if(artist == null)
+            return null;
+        return service.updateArtist(artist, type, id);
+    }
 }

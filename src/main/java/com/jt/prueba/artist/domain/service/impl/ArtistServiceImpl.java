@@ -16,6 +16,12 @@ public class ArtistServiceImpl implements ArtistService {
     ArtistServiceImpl(ArtistRepository repository){
         this.repository = repository;
     }
+
+    @Override
+    public List<Artist> getAllArtists() {
+        return repository.findAll();
+    }
+
     @Override
     public Artist createArtist(Artist artist) {
         Artist dbArtist = repository.findArtistByIdeTypeAndIdeNumber(artist.getIdeType(), artist.getIdeNumber()).orElse(null);
@@ -38,5 +44,28 @@ public class ArtistServiceImpl implements ArtistService {
         if(artworkList == null)
             return null;
         return artworkList;
+    }
+
+    @Override
+    public Artist updateArtist(Artist artist, String type, String id) {
+        Artist dbArtist = repository.findArtistByIdeTypeAndIdeNumber(type, id).orElse(null);
+        if(dbArtist == null)
+            return null;
+        dbArtist.setNames(artist.getNames());
+        dbArtist.setLast_names(artist.getLast_names());
+        return repository.save(dbArtist);
+    }
+
+    @Override
+    public Artist deleteArtist(String type, String id) {
+        Artist dbArtist = repository.findArtistByIdeTypeAndIdeNumber(type, id).orElse(null);
+        if(dbArtist == null)
+            return null;
+        try {
+            repository.delete(dbArtist);
+            return dbArtist;
+        } catch (Exception ex) {
+            return null;
+        }
     }
 }

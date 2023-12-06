@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostArtistRequest {
+public class ArtistRequest {
     private String ide_type;
     private String ide_number;
     private String names;
